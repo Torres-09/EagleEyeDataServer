@@ -1,5 +1,7 @@
 package com.EagleEye.EagleEyeTeamServer.service;
 
-public interface VideoService {
+import com.EagleEye.EagleEyeTeamServer.dto.UploadRequest;
 
+public interface VideoService {
+    void uploadVideo(UploadRequest request);
 }
