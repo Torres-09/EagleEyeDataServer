@@ -1,5 +1,6 @@
 package com.EagleEye.EagleEyeTeamServer.service;
 
+import com.EagleEye.EagleEyeTeamServer.dto.VideoShowDto;
 import com.EagleEye.EagleEyeTeamServer.dto.VideoUploadRequest;
 import com.EagleEye.EagleEyeTeamServer.entity.Video;
 import com.EagleEye.EagleEyeTeamServer.repository.VideoRepository;
@@ -9,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,5 +48,15 @@ public class VideoServiceImpl implements VideoService {
 
         // 영상처리 머신러닝 적용하고 비디오를 적용하기
         videoRepository.save(video);
+    }
+
+    @Override
+    public List<VideoShowDto> videoShowAll() {
+        List<Video> videos = videoRepository.findAll();
+        List<VideoShowDto> collect = videos.stream()
+                .map(v -> new VideoShowDto(v))
+                .collect(Collectors.toList());
+
+        return collect;
     }
 }

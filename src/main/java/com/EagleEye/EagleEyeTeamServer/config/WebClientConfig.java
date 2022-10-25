@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class WebClientConfig {
+
+    // api 대기시간 , 얼마나 걸릴 지..
     HttpClient httpClient = HttpClient.create()
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
             .responseTimeout(Duration.ofMillis(5000))

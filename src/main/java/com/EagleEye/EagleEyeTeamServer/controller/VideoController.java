@@ -1,12 +1,14 @@
 package com.EagleEye.EagleEyeTeamServer.controller;
 
 import com.EagleEye.EagleEyeTeamServer.dto.ApiResponse;
-import com.EagleEye.EagleEyeTeamServer.dto.VideoShwoDto;
+import com.EagleEye.EagleEyeTeamServer.dto.VideoShowDto;
 import com.EagleEye.EagleEyeTeamServer.dto.VideoUploadRequest;
 import com.EagleEye.EagleEyeTeamServer.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 @RestController
@@ -23,8 +25,9 @@ public class VideoController {
     }
 
     @GetMapping("/showAllVideo")
-    public ApiResponse<VideoShwoDto> showAllVideo() {
-        return null;
+    public ApiResponse<List<VideoShowDto>> showAllVideo() {
+        List<VideoShowDto> result = videoService.videoShowAll();
+        return new ApiResponse<>(result);
     }
 
     @GetMapping("/connect-check")
