@@ -22,6 +22,10 @@ public class VideoServiceImpl implements VideoService {
     public void uploadVideo(VideoUploadRequest request,
                             MultipartFile multipartFile) {
 
+        // 파이썬 api 호출하여 영상처리 된 영상 받아오기
+
+        // 받아온 영상 주소 데이터베이스에 저장하기
+
         Video video = Video.builder()
                 .videoName(request.getTitleName())
                 .videoUrl("c:/EagleEyeVideo/" + multipartFile.getOriginalFilename())
