@@ -43,6 +43,7 @@ public class VideoServiceImpl implements VideoService {
             throw new RuntimeException("file save Error");
         }
 
+        // 영상처리 머신러닝 적용하고 비디오를 적용하기
         videoRepository.save(video);
     }
 }
