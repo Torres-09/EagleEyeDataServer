@@ -32,6 +32,8 @@ dependencies {
 
 	// swagger
 	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+
+	implementation 'io.netty:netty-resolver-dns-native-macos:4.1.84.Final:osx-aarch_64'
 }
 
 tasks.named('test') {

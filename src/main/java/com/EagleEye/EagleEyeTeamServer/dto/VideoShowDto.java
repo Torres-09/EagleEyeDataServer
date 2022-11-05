@@ -9,6 +9,6 @@ public class VideoShowDto {
     private String videoUrl;
 
     public VideoShowDto(Video video) {
-        this.videoUrl = video.getVideoUrl();
+        this.videoUrl = video.getChangedFileName();
     }
 }

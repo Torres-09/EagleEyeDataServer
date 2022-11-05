@@ -2,9 +2,10 @@ package com.EagleEye.EagleEyeTeamServer.controller;
 
 import com.EagleEye.EagleEyeTeamServer.dto.ApiResponse;
 import com.EagleEye.EagleEyeTeamServer.dto.VideoShowDto;
-import com.EagleEye.EagleEyeTeamServer.dto.VideoUploadRequest;
 import com.EagleEye.EagleEyeTeamServer.service.VideoService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Description;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,26 +23,37 @@ public class VideoController {
     private final WebClient webClient;
 
     @PostMapping("/upload")
+    @Description("사진 혹은 비디오 파일을 업로드하는 api" +
+            "Requset는 titleName : application/json과 " +
+            "video : multipart/form-data 가 필요합니다")
+    @ApiOperation("파일 업로드")
     public ApiResponse<String> uploadVideo(
-            @RequestBody VideoUploadRequest videoUploadRequest,
+            @RequestParam String titleName,
             @RequestPart MultipartFile video) {
-        videoService.uploadVideo(videoUploadRequest, video);
+        videoService.uploadVideo(titleName, video);
         return new ApiResponse<>("ok");
     }
 
     @GetMapping("/showAllVideo")
+    @Description("업로드했던 사진 혹은 비디오 파일을 업로드하는 api")
+    @ApiOperation("파일 조회")
     public ApiResponse<List<VideoShowDto>> showAllVideo() {
         List<VideoShowDto> result = videoService.videoShowAll();
         return new ApiResponse<>(result);
     }
 
     @GetMapping("/connect-check")
+    @Description("반환타입 Data : String" +
+            "단순 문자열 ok가 반환됩니다.")
     public ApiResponse<String> connectCheck() {
 
         return new ApiResponse<>("ok");
     }
 
     @GetMapping("/connect-check2")
+    @Description("반환타입 Data : {list}" +
+            "list의 첫 번재에는 ok 문자열" +
+            "list의 두 번째에는 사진의 링크가 반환됩니다.")
     public ApiResponse<List<String>> connectCheck2() {
         List<String> list = new ArrayList<>();
         list.add("ok");

@@ -20,8 +20,11 @@ public class Video {
     @Column(name = "video_name")
     private String videoName;
 
-    @Column(name = "video_url")
-    private String videoUrl;
+    @Column(name = "original_file_name")
+    private String originalFileName;
+
+    @Column(name = "changed_file_name")
+    private String changedFileName;
 
     @Column(name = "video_upload_date")
     private LocalDateTime createAt;
