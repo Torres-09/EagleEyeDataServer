@@ -1,6 +1,6 @@
 package com.EagleEye.EagleEyeTeamServer.controller;
 
-import com.EagleEye.EagleEyeTeamServer.dto.ApiResponse;
+import com.EagleEye.EagleEyeTeamServer.common.ApiResponse;
 import com.EagleEye.EagleEyeTeamServer.dto.VideoShowDto;
 import com.EagleEye.EagleEyeTeamServer.service.VideoService;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +31,7 @@ public class VideoController {
             @RequestParam String titleName,
             @RequestPart MultipartFile video) {
         videoService.uploadVideo(titleName, video);
-        return new ApiResponse<>("ok");
+        return ApiResponse.success("ok");
     }
 
     @GetMapping("/showAllVideo")
@@ -39,15 +39,14 @@ public class VideoController {
     @ApiOperation("파일 조회")
     public ApiResponse<List<VideoShowDto>> showAllVideo() {
         List<VideoShowDto> result = videoService.videoShowAll();
-        return new ApiResponse<>(result);
+        return ApiResponse.success(result);
     }
 
     @GetMapping("/connect-check")
     @Description("반환타입 Data : String" +
             "단순 문자열 ok가 반환됩니다.")
     public ApiResponse<String> connectCheck() {
-
-        return new ApiResponse<>("ok");
+        return ApiResponse.success("ok");
     }
 
     @GetMapping("/connect-check2")
@@ -58,13 +57,13 @@ public class VideoController {
         List<String> list = new ArrayList<>();
         list.add("ok");
         list.add("https://www.gstatic.com/youtube/img/promos/growth/a0518425715a2ee589c7eec7e54ce956556f9c191f1dfb2f7ca4e38f273c4872_244x112.png");
-        return new ApiResponse<>(list);
+        return ApiResponse.success(list);
     }
 
     @GetMapping("fastapi-test")
     public ApiResponse<Mono<String>> fastapiTest() {
 
-        return new ApiResponse<>(webClient.get()
+        return  ApiResponse.success(webClient.get()
                 .uri("localhost:8000/fastapi-test")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
