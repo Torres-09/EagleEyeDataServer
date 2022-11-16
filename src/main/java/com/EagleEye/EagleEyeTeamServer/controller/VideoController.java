@@ -6,11 +6,10 @@ import com.EagleEye.EagleEyeTeamServer.service.VideoService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,13 +60,13 @@ public class VideoController {
     }
 
     @GetMapping("fastapi-test")
-    public ApiResponse<Mono<String>> fastapiTest() {
+    public ApiResponse<?> fastapiTest() {
 
-        return  ApiResponse.success(webClient.get()
+        Flux<String> data = webClient.get()
                 .uri("localhost:8000/fastapi-test")
-                .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-                .block()
-                .bodyToMono(String.class));
+                .retrieve()
+                .bodyToFlux(String.class);
+
+        return  ApiResponse.success(data.blockFirst());
     }
 }
