@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class VideoController {
     @ApiOperation("파일 업로드")
     public ApiResponse<String> uploadVideo(
             @RequestParam String titleName,
-            @RequestPart MultipartFile video) {
+            @RequestPart MultipartFile video) throws IOException {
         videoService.uploadVideo(titleName, video);
         return ApiResponse.success("ok");
     }
