@@ -51,6 +51,11 @@ public class VideoServiceImpl implements VideoService {
         String fullPath = video.getCreateAt() + video.getOriginalFileName();
         System.out.println("파일저장");
         Path path = Paths.get(fullPath);
+        System.out.println(path);
+
+        // 이게 진짜 fullpath
+        System.out.println(path.toUri());
+
         FileCopyUtils.copy(multipartFile.getInputStream(), new FileOutputStream(path.toFile()));
 
 
