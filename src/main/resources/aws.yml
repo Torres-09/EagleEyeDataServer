@@ -1,9 +1,0 @@
-cloud:
-  aws:
-    s3:
-      bucket:
-    region:
-      static:
-    credentials:
-      accessKey:
-      secretKey:
