@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface VideoService {
     void uploadVideo(String titleName, MultipartFile multipartFile) throws IOException;
+    void uploadVideo2(MultipartFile multipartFile) throws IOException;
 
     List<VideoShowDto> videoShowAll();
 }

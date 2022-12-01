@@ -3,6 +3,7 @@ package com.EagleEye.EagleEyeTeamServer.controller;
 import com.EagleEye.EagleEyeTeamServer.common.ApiResponse;
 import com.EagleEye.EagleEyeTeamServer.dto.VideoShowDto;
 import com.EagleEye.EagleEyeTeamServer.service.VideoService;
+import com.EagleEye.EagleEyeTeamServer.util.S3getter;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
@@ -21,6 +22,7 @@ import java.util.List;
 public class VideoController {
     private final VideoService videoService;
     private final WebClient webClient;
+    private final S3getter s3getter;
 
     @PostMapping("/upload")
     @Description("사진 혹은 비디오 파일을 업로드하는 api" +
@@ -31,6 +33,14 @@ public class VideoController {
             @RequestParam String titleName,
             @RequestPart MultipartFile video) throws IOException {
         videoService.uploadVideo(titleName, video);
+        return ApiResponse.success("ok");
+    }
+
+    @PostMapping("/upload2")
+    @ApiOperation("파일 업로드")
+    public ApiResponse<String> uploadVideo2(
+            @RequestPart MultipartFile video) throws IOException {
+        videoService.uploadVideo2(video);
         return ApiResponse.success("ok");
     }
 
@@ -69,5 +79,10 @@ public class VideoController {
                 .bodyToFlux(String.class);
 
         return  ApiResponse.success(data.blockFirst());
+    }
+
+    @GetMapping("api-test")
+    public ApiResponse<List<String>> etcApi() {
+        return ApiResponse.success(s3getter.getFileList());
     }
 }

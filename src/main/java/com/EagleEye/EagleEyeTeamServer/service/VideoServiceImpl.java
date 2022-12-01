@@ -5,10 +5,8 @@ import com.EagleEye.EagleEyeTeamServer.entity.Video;
 import com.EagleEye.EagleEyeTeamServer.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,7 +14,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -43,20 +40,26 @@ public class VideoServiceImpl implements VideoService {
                 .createAt(LocalDateTime.now())
                 .build();
 
-        System.out.println("비디오의 이름은 : " + video.getVideoName());
-        System.out.println("비디오의 이름은 : " + video.getOriginalFileName());
-        System.out.println("비디오의 이름은 : " + multipartFile.getOriginalFilename());
-        System.out.println("비디오의 이름은 : " + multipartFile.getName());
+//        System.out.println("비디오의 이름은 : " + video.getVideoName());
+//        System.out.println("비디오의 이름은 : " + video.getOriginalFileName());
+//        System.out.println("비디오의 이름은 : " + multipartFile.getOriginalFilename());
+//        System.out.println("비디오의 이름은 : " + multipartFile.getName());
 
-        String fullPath = video.getCreateAt() + video.getOriginalFileName();
+        String fullPath = video.getOriginalFileName();
         System.out.println("파일저장");
+        System.out.println(fullPath);
         Path path = Paths.get(fullPath);
         System.out.println(path);
 
         // 이게 진짜 fullpath
         System.out.println(path.toUri());
 
-        FileCopyUtils.copy(multipartFile.getInputStream(), new FileOutputStream(path.toFile()));
+        File file = new File("/home/ubuntu/uploadFile/" + path);
+        System.out.println("??");
+        FileCopyUtils.copy(multipartFile.getInputStream(), new FileOutputStream(file));
+        System.out.println("파일 저장");
+        file.delete();
+        System.out.println("파일 삭제");
 
 
         // 영상 처리 api 호출하기
@@ -69,6 +72,25 @@ public class VideoServiceImpl implements VideoService {
 
         // 영상처리 머신러닝 적용하고 비디오를 적용하기
         videoRepository.save(video);
+    }
+
+    @Override
+    public void uploadVideo2(MultipartFile multipartFile) throws IOException {
+        String fullPath = multipartFile.getOriginalFilename();
+        System.out.println("파일저장");
+        System.out.println(fullPath);
+        Path path = Paths.get(fullPath);
+        System.out.println(path);
+
+        // 이게 진짜 fullpath
+        System.out.println(path.toUri());
+
+        File file = new File("/home/ubuntu/uploadFile/" + path);
+        System.out.println("??");
+        FileCopyUtils.copy(multipartFile.getInputStream(), new FileOutputStream(file));
+        System.out.println("파일 저장");
+        file.delete();
+        System.out.println("파일 삭제");
     }
 
     @Override
