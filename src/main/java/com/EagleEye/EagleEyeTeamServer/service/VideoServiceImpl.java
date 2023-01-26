@@ -40,35 +40,13 @@ public class VideoServiceImpl implements VideoService {
                 .createAt(LocalDateTime.now())
                 .build();
 
-//        System.out.println("비디오의 이름은 : " + video.getVideoName());
-//        System.out.println("비디오의 이름은 : " + video.getOriginalFileName());
-//        System.out.println("비디오의 이름은 : " + multipartFile.getOriginalFilename());
-//        System.out.println("비디오의 이름은 : " + multipartFile.getName());
-
         String fullPath = video.getOriginalFileName();
-        System.out.println("파일저장");
-        System.out.println(fullPath);
         Path path = Paths.get(fullPath);
-        System.out.println(path);
 
-        // 이게 진짜 fullpath
-        System.out.println(path.toUri());
 
         File file = new File("/home/ubuntu/uploadFile/" + path);
-        System.out.println("??");
         FileCopyUtils.copy(multipartFile.getInputStream(), new FileOutputStream(file));
-        System.out.println("파일 저장");
         file.delete();
-        System.out.println("파일 삭제");
-
-
-        // 영상 처리 api 호출하기
-//        webClient.post()
-//                .uri("localhost:8000/change")
-//                .bodyValue(multipartFile)
-//                .retrieve()
-//                .bodyToMono(MultipartFile.class)
-//                .block();
 
         // 영상처리 머신러닝 적용하고 비디오를 적용하기
         videoRepository.save(video);
@@ -77,20 +55,11 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public void uploadVideo2(MultipartFile multipartFile) throws IOException {
         String fullPath = multipartFile.getOriginalFilename();
-        System.out.println("파일저장");
-        System.out.println(fullPath);
         Path path = Paths.get(fullPath);
-        System.out.println(path);
-
-        // 이게 진짜 fullpath
-        System.out.println(path.toUri());
 
         File file = new File("/home/ubuntu/uploadFile/" + path);
-        System.out.println("??");
         FileCopyUtils.copy(multipartFile.getInputStream(), new FileOutputStream(file));
-        System.out.println("파일 저장");
         file.delete();
-        System.out.println("파일 삭제");
     }
 
     @Override
